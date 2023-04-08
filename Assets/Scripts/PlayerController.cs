@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask whatIsGround;
     public Transform firePoint;
     public GameObject bullet;
+    public bool invertX, invertY;
     
     private CharacterController _charController;
     private Vector3 _moveInput;
@@ -26,6 +27,9 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Move();
+
+        // Debug.Log((Input.GetAxisRaw("Mouse X")));
+        Debug.Log((Input.GetAxisRaw("Mouse Y")));
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -79,6 +83,15 @@ public class PlayerController : MonoBehaviour
         _charController.Move(_moveInput * Time.deltaTime);
 
         Vector2 mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")) * mouseSensitivity;
+        
+        if (invertX)
+        {
+            mouseInput.x = -mouseInput.x;
+        }
+        if (invertY)
+        {
+            mouseInput.y = -mouseInput.y;
+        }
         
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + mouseInput.x, transform.rotation.eulerAngles.z);
 
