@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour
     public Transform camTrans;
     public Transform groundCheckPoint;
     public LayerMask whatIsGround;
-
+    public Transform firePoint;
+    public GameObject bullet;
     
     private CharacterController _charController;
     private Vector3 _moveInput;
@@ -25,6 +26,16 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Move();
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Shoot();
+        }
+    }
+
+    void Shoot()
+    {
+        Instantiate(bullet, firePoint.position, firePoint.rotation);
     }
 
     void Move()
@@ -41,14 +52,12 @@ public class PlayerController : MonoBehaviour
         
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            _moveInput = _moveInput * runSpeed; // running 
+            _moveInput *= runSpeed; // running 
         }
         else
         {
-            _moveInput = _moveInput * moveSpeed; // moving
+            _moveInput *= moveSpeed; // moving
         }
-
-        _moveInput = _moveInput * moveSpeed;
         
         _moveInput.y = yStore;
 
